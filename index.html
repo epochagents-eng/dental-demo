@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e7490">
+<meta name="robots" content="noindex">
+<title>Pedir cita - Clínica Dental de la Doctora Anita</title>
+<link rel="stylesheet" href="estilos.css?v=4">
+</head>
+<body>
+
+<header class="cabecera">
+  <div class="cabecera-texto">
+    <h1 id="nombre">Clínica Dental</h1>
+    <p id="direccion" class="dato">Cargando…</p>
+    <p class="dato"><a id="telefono" href="#" class="tel">—</a></p>
+  </div>
+  <div class="punto" id="punto" title="Estado de la conexión"></div>
+</header>
+
+<main id="chat" class="chat" aria-live="polite">
+  <div class="burbuja asistente">
+    <p>Hola 👋 Soy el asistente de la clínica. Puedo darte una cita, cambiarla o cancelarla.</p>
+  </div>
+  <div class="sugerencias" id="sugerencias">
+    <button type="button" class="sugerencia" data-texto="Quiero pedir una cita">Pedir cita</button>
+    <button type="button" class="sugerencia" data-texto="¿Cuánto cuesta una limpieza?">Precios</button>
+    <button type="button" class="sugerencia" data-texto="Quiero cancelar una cita">Cancelar una cita</button>
+  </div>
+</main>
+
+<footer class="pie">
+  <p class="aviso">Al escribir aceptas que la clínica trate tus datos para gestionar tu cita.
+    Esto es una demo: no escribas datos reales.</p>
+  <form id="form" class="barra" autocomplete="off">
+    <input id="texto" type="text" maxlength="500" placeholder="Escribe tu mensaje…"
+           aria-label="Tu mensaje" enterkeyhint="send">
+    <button id="enviar" type="submit" aria-label="Enviar mensaje">
+      <span class="flecha" aria-hidden="true">➤</span>
+    </button>
+  </form>
+</footer>
+
+<noscript>
+  <p class="sinjs">Activa JavaScript para pedir cita desde aquí. También puedes llamar a la clínica.</p>
+</noscript>
+
+<script src="app.js?v=5"></script>
+</body>
+</html>

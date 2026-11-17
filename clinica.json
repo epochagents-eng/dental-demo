@@ -1,0 +1,8 @@
+{
+  "slug": "demo",
+  "nombre": "Clínica Dental de la Doctora Anita",
+  "direccion": "Calle 23 #456, Vedado, La Habana",
+  "telefono": "+53 7 555 1234",
+  "motor": "https://n8n-stable-2kr0.onrender.com",
+  "bot": "recepcion_dental_bot"
+}

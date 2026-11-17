@@ -1,0 +1,280 @@
+/* Página del paciente — una sola hoja, sin fuentes ni imágenes externas. */
+
+html { background: #dceaf0; height: 100%; }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #eef7fa;
+  color: #12313c;
+  font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ---------- Cabecera: sale del JSON estático, nunca espera a n8n ---------- */
+
+.cabecera {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px 12px;
+  padding-top: calc(14px + env(safe-area-inset-top));
+  background: #fff;
+  border-bottom: 1px solid #d9e8ee;
+  box-shadow: 0 1px 3px rgba(8, 40, 52, .06);
+}
+
+.cabecera-texto { min-width: 0; }
+
+h1 {
+  margin: 0 0 3px;
+  font-size: 18px;
+  line-height: 1.25;
+  color: #0e7490;
+  letter-spacing: -.2px;
+}
+
+.dato {
+  margin: 0;
+  font-size: 12.5px;
+  color: #5b7480;
+  overflow-wrap: anywhere;
+}
+
+.tel { color: #0e7490; text-decoration: none; font-weight: 600; }
+.tel:active { text-decoration: underline; }
+
+.punto {
+  display: none;
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin: 5px 0 0 auto;
+  border-radius: 50%;
+  background: #a9bcc4;
+  transition: background .3s;
+}
+.punto.ok { display: block; background: #1f9d68; }
+.punto.mal { display: block; background: #c2413b; }
+
+/* ---------- Conversación ---------- */
+
+.chat {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 14px 8px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.burbuja {
+  align-self: flex-start;
+  max-width: 84%;
+  padding: 10px 13px;
+  background: #fff;
+  border: 1px solid #dbe9ee;
+  border-radius: 16px;
+  border-bottom-left-radius: 5px;
+  box-shadow: 0 1px 2px rgba(8, 40, 52, .05);
+  overflow-wrap: anywhere;
+}
+.burbuja p { margin: 0; white-space: pre-wrap; }
+
+.burbuja.paciente {
+  align-self: flex-end;
+  background: #0e7490;
+  border-color: #0e7490;
+  color: #fff;
+  border-radius: 16px;
+  border-bottom-right-radius: 5px;
+}
+
+.burbuja.aviso.error {
+  background: #fff5f4;
+  border-color: #f0c9c5;
+  color: #8a2d26;
+}
+
+/* Los tres puntos de «escribiendo» */
+
+.typing { display: inline-flex; gap: 4px; padding: 3px 0 2px; }
+.typing i {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #8fa9b3;
+  animation: punto 1.2s infinite;
+}
+.typing i:nth-child(2) { animation-delay: .15s; }
+.typing i:nth-child(3) { animation-delay: .3s; }
+
+@keyframes punto {
+  0%, 60%, 100% { opacity: .25; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+.espera {
+  display: block;
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: #5b7480;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing i { animation: none; opacity: .6; }
+}
+
+/* ---------- Tarjeta de la cita ---------- */
+
+.cita {
+  align-self: stretch;
+  background: #fff;
+  border: 1px solid #bfe0e8;
+  border-left: 5px solid #0e7490;
+  border-radius: 12px;
+  padding: 12px 14px 14px;
+  box-shadow: 0 1px 3px rgba(8, 40, 52, .06);
+}
+
+.cita h2 {
+  margin: 0 0 9px;
+  font-size: 15px;
+  color: #0e7490;
+}
+
+.cita dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  margin: 0;
+  font-size: 14px;
+}
+.cita dt { color: #5b7480; }
+.cita dd { margin: 0; font-weight: 600; }
+
+.cita a.boton {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 15px;
+  background: #0e7490;
+  border-radius: 9px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.cita a.boton:active { background: #0a5c72; }
+
+/* Varias citas en la misma tarjeta: una conversación puede tener la del paciente y la de un familiar. */
+.cita-item + .cita-item,
+.cita-item + .cita-pie {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #bfe0e8;
+}
+.cita-item a.boton {
+  margin-top: 9px;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+/* ---------- Sugerencias del principio ---------- */
+
+.sugerencias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+.sugerencia {
+  font: inherit;
+  font-size: 14px;
+  padding: 9px 13px;
+  background: #fff;
+  border: 1px solid #0e7490;
+  border-radius: 999px;
+  color: #0e7490;
+  cursor: pointer;
+}
+.sugerencia:active { background: #e2f1f6; }
+
+/* ---------- Pie: aviso y campo de texto ---------- */
+
+.pie {
+  background: #fff;
+  border-top: 1px solid #d9e8ee;
+  padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+}
+
+.aviso {
+  margin: 0 0 8px;
+  padding: 0 3px;
+  font-size: 11px;
+  line-height: 1.35;
+  color: #7b9099;
+}
+
+.barra { display: flex; align-items: center; gap: 8px; }
+
+#texto {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 12px 15px;
+  background: #f7fbfc;
+  border: 1px solid #cfdfe5;
+  border-radius: 999px;
+  color: inherit;
+  font: inherit;
+  outline: none;
+}
+#texto::placeholder { color: #93a7ae; }
+#texto:focus { background: #fff; border-color: #0e7490; }
+
+#enviar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  background: #0e7490;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 17px;
+  cursor: pointer;
+}
+#enviar:active { background: #0a5c72; }
+#enviar:disabled { opacity: .45; cursor: default; }
+.flecha { transform: translateX(1px); }
+
+.sinjs {
+  margin: 0;
+  padding: 14px 16px;
+  background: #fff5f4;
+  color: #8a2d26;
+  font-size: 14px;
+}
+
+/* ---------- En pantallas grandes, columna centrada ---------- */
+
+@media (min-width: 760px) {
+  body {
+    max-width: 720px;
+    margin: 0 auto;
+    box-shadow: 0 0 44px rgba(8, 40, 52, .1);
+  }
+  .cabecera { padding: 18px 22px 14px; }
+  .chat { padding: 20px 22px 10px; gap: 12px; }
+  .pie { padding: 10px 18px 14px; }
+  #texto { padding: 13px 17px; }
+}
